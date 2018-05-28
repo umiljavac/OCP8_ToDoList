@@ -56,18 +56,21 @@ class AppFixtures extends Fixture
         $task = new Task();
         $task->setTitle('Faire la vaisselle');
         $task->setContent('Il faut faire la vaisselle chaque jour !');
+        $task->setAuthor($user);
 
         $manager->persist($task);
 
         $task = new Task();
         $task->setTitle('Retourner à la piscine');
         $task->setContent('2 fois par semaine : natation !');
+        $task->setAuthor($user1);
 
         $manager->persist($task);
 
         $task = new Task();
         $task->setTitle('Apprendre le Java');
         $task->setContent('Commencer par suivre un mooc sur OC.');
+        $task->setAuthor($user2);
 
         $manager->persist($task);
 
