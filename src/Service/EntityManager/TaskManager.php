@@ -29,11 +29,23 @@ class TaskManager
     }
 
     /**
-     * @return array
+     * @param User $user
+     *
+     * @return mixed
      */
-    public function listAllTasks()
+    public function listUserTasksToDo(User $user)
     {
-        return $this->em->getRepository(Task::class)->findAll();
+        return $this->em->getRepository(Task::class)->tasksToDo($user);
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return mixed
+     */
+    public function listUserTasksDone(User $user)
+    {
+        return $this->em->getRepository(Task::class)->tasksDone($user);
     }
 
     /**
