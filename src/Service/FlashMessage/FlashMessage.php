@@ -26,6 +26,8 @@ class FlashMessage
     const MESSAGE_TASK_EDITED = 'La tâche "%s" a bien été modifiée.';
     const MESSAGE_TASK_DONE = 'La tâche "%s" a bien été marquée comme faite.';
     const MESSAGE_TASK_TODO = 'La tâche "%s" a bien été marquée comme non terminée.';
+    const MESSAGE_USER_ADDED = 'L\'utililateur "%s" a bien été ajouté.';
+    const MESSAGE_USER_EDITED = 'L\'utililateur "%s" a bien été modifié.';
 
     /**
      * FlashMessage constructor.
