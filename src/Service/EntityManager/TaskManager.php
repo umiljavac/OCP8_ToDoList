@@ -100,7 +100,7 @@ class TaskManager
             );
         }
         $this->sessionManager->setEditRedirection($request);
-        
+
         return $form->createView();
     }
 
