@@ -135,13 +135,21 @@ class TaskControllerTest extends BaseFunctionalTest
         $crawler = $this->loggedAdmin->followRedirect();
 
         $this->assertSame(
-            1,
+            0,
             $crawler->filter('span.glyphicon.glyphicon-ok')->count()
         );
 
         $this->assertSame(
             2,
             $crawler->filter('span.glyphicon.glyphicon-remove')->count()
+        );
+
+        $link = $crawler->selectLink('Consulter la liste des tâches terminées')->link();
+        $crawler = $this->loggedAdmin->click($link);
+
+        $this->assertSame(
+            1,
+            $crawler->filter('html:contains("Liste des tâches terminées")')->count()
         );
 
         $form = $crawler->selectButton('Marquer non terminée')->form();
@@ -158,6 +166,10 @@ class TaskControllerTest extends BaseFunctionalTest
         $this->assertSame(
             0,
             $crawler->filter('span.glyphicon.glyphicon-ok')->count()
+        );
+        $this->assertSame(
+            1,
+            $crawler->filter('html:contains("Liste des tâches à faire")')->count()
         );
     }
 

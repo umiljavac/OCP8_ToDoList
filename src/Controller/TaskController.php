@@ -14,15 +14,37 @@ use Symfony\Component\HttpFoundation\Response;
 class TaskController extends Controller
 {
     /**
+     * @Route("/tasks/done", name="task_done")
+     *
+     * @param TaskManager $taskManager
+     *
+     * @return Response
+     */
+    public function listTaskDoneAction(TaskManager $taskManager)
+    {
+        return $this->render(
+            'views/task/list.html.twig',
+            [
+                'tasks' => $taskManager->listUserTasksDone($this->getUser())
+            ]
+        );
+    }
+
+    /**
      * @Route("/tasks", name="task_list")
      *
      * @param TaskManager $taskManager
      *
      * @return Response
      */
-    public function listAction(TaskManager $taskManager)
+    public function listTaskToDoAction(TaskManager $taskManager)
     {
-        return $this->render('views/task/list.html.twig', ['tasks' => $taskManager->listAllTasks()]);
+        return $this->render(
+            'views/task/list.html.twig',
+            [
+                'tasks' => $taskManager->listUserTasksToDo($this->getUser())
+            ]
+        );
     }
 
     /**
