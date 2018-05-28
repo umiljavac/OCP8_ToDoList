@@ -39,6 +39,18 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="string", length=190)
+     */
+    private $roles;
+
+    /**
+     * Transitional state to avoid conflict with internal kernel logic regarding User roles attribute
+     *
+     * Used in UserType form
+     */
+    private $formRoles;
+
     public function getId()
     {
         return $this->id;
@@ -81,7 +93,23 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->roles);
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function getFormRoles()
+    {
+        return implode(',', $this->getRoles());
+    }
+
+    public function setFormRoles($formRoles)
+    {
+        $this->formRoles = $formRoles;
+        $this->roles = $formRoles;
     }
 
     public function eraseCredentials()
