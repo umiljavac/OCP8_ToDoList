@@ -18,7 +18,7 @@ class TaskController extends Controller
      *
      * @param TaskManager $taskManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function listTaskDoneAction(TaskManager $taskManager)
     {
@@ -35,7 +35,7 @@ class TaskController extends Controller
      *
      * @param TaskManager $taskManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function listTaskToDoAction(TaskManager $taskManager)
     {
