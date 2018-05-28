@@ -6,7 +6,7 @@
  * Time: 16:08
  */
 
-namespace App\Tests\Entity;
+namespace App\Tests\Entity\Unitary;
 
 use App\Entity\Task;
 use App\Entity\User;
