@@ -11,6 +11,7 @@ namespace App\Service\EntityManager;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Service\Form\FormManager;
+use App\Service\Session\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\FlashMessage\FlashMessage;
@@ -19,13 +20,16 @@ class TaskManager
 {
     private $em;
     private $formManager;
+    private $sessionManager;
 
     public function __construct(
         EntityManagerInterface $em,
-        FormManager $formManager
+        FormManager $formManager,
+        SessionManager $sessionManager
     ) {
         $this->em = $em;
         $this->formManager = $formManager;
+        $this->sessionManager = $sessionManager;
     }
 
     /**
@@ -95,6 +99,8 @@ class TaskManager
                 FlashMessage::MESSAGE_TASK_EDITED
             );
         }
+        $this->sessionManager->setEditRedirection($request);
+
         return $form->createView();
     }
 
