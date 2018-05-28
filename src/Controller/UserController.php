@@ -3,67 +3,81 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\Type\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use App\Service\EntityManager\UserManager;
+use App\Service\FlashMessage\FlashMessage;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class UserController extends Controller
 {
     /**
      * @Route("/users", name="user_list")
+     *
+     * @param UserManager $userManager
+     *
+     * @return Response
      */
-    public function listAction()
+    public function listAction(UserManager $userManager)
     {
-        return $this->render('views/user/list.html.twig', ['users' => $this->getDoctrine()->getRepository(User::class)->findAll()]);
+        return $this->render('views/user/list.html.twig', ['users' => $userManager->listAllAction()]);
     }
 
     /**
      * @Route("/users/create", name="user_create")
+     *
+     * @param Request     $request
+     * @param UserManager $userManager
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, UserManager $userManager)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $managerResult = $userManager->createUser($request);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-
-            return $this->redirectToRoute('user_list');
+        if (is_array($managerResult)) {
+            return $this->redirectToListOfUsers($managerResult['message'], $managerResult['user']);
         }
-
-        return $this->render('views/user/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('views/user/create.html.twig', ['form' => $managerResult]);
     }
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
+     *
+     * @param User        $user
+     * @param Request     $request
+     * @param UserManager $userManager
+     *
+     * @return Response
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(User $user, Request $request, UserManager $userManager)
     {
-        $form = $this->createForm(UserType::class, $user);
+        $managerResult = $userManager->editUser($request, $user);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été modifié");
-
-            return $this->redirectToRoute('user_list');
+        if ($managerResult instanceof FlashMessage) {
+            return $this->redirectToListOfUsers($managerResult, $user);
         }
+        return $this->render('views/user/edit.html.twig', ['form' => $managerResult, 'user' => $user]);
+    }
 
-        return $this->render('views/user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+    /**
+     * @param FlashMessage $flashMessage
+     * @param User         $user
+     *
+     * @return RedirectResponse
+     */
+    public function redirectToListOfUsers(FlashMessage $flashMessage, User $user)
+    {
+        $this->addFlash($flashMessage->getType(), sprintf($flashMessage->getMessage(), $user->getUsername()));
+
+        return $this->redirectToRoute('user_list');
     }
 }

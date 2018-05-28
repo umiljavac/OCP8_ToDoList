@@ -39,6 +39,11 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="string", length=190)
+     */
+    private $roles;
+
     public function getId()
     {
         return $this->id;
@@ -81,7 +86,22 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->roles);
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function getFormRoles()
+    {
+        return implode(',', $this->getRoles());
+    }
+
+    public function setFormRoles($formRoles)
+    {
+        $this->setRoles($formRoles);
     }
 
     public function eraseCredentials()

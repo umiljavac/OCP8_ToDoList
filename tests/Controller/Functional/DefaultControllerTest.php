@@ -29,7 +29,7 @@ class DefaultControllerTest extends BaseFunctionalTest
         $crawler = $this->loggedAdmin->request('GET', '/');
         $this->assertEquals(200, $this->loggedAdmin->getResponse()->getStatusCode());
         $this->assertSame(
-            5,
+            6,
             $crawler->filter('a.btn')->count()
         );
         $this->assertSame(

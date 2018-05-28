@@ -10,7 +10,9 @@ namespace App\Service\Form;
 
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\Type\TaskType;
+use App\Form\Type\UserType;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class FormManager
@@ -35,6 +37,16 @@ class FormManager
     public function createTaskForm(Task $task)
     {
         return  $this->createForm(TaskType::class, $task);
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createUserRegistrationForm(User $user)
+    {
+        return $this->createForm(UserType::class, $user);
     }
 
     /**
