@@ -160,7 +160,7 @@ class TaskControllerTest extends BaseFunctionalTest
         $crawler = $this->loggedAdmin->followRedirect();
 
         $this->assertSame(
-            3,
+            0,
             $crawler->filter('span.glyphicon.glyphicon-remove')->count()
         );
         $this->assertSame(
@@ -169,7 +169,11 @@ class TaskControllerTest extends BaseFunctionalTest
         );
         $this->assertSame(
             1,
-            $crawler->filter('html:contains("Liste des tâches à faire")')->count()
+            $crawler->filter('html:contains("Liste des tâches terminées")')->count()
+        );
+        $this->assertSame(
+            1,
+            $crawler->filter('html:contains("Il n\'y a pas encore de tâche enregistrée")')->count()
         );
     }
 
