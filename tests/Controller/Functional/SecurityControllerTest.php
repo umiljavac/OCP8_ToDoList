@@ -30,7 +30,7 @@ class SecurityControllerTest extends BaseFunctionalTest
             $client->getResponse()->getStatusCode()
         );
         $this->assertSame(
-            5,
+            4,
             $crawler->filter('a.btn')->count()
         );
         $this->assertSame(
