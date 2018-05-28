@@ -79,10 +79,6 @@ class SecurityControllerTest extends BaseFunctionalTest
 
         $crawler = $client->followRedirect();
 
-        $this->assertTrue($client->getResponse()->isRedirect());
-
-        $crawler = $client->followRedirect();
-
         $this->assertSame(
             1,
             $crawler->selectButton("Se connecter")->count()
