@@ -15,7 +15,7 @@ We have to correct some anomalies and implements new functionality.
 ## 2-Requirements
 This project use Symfony 4 framework and Symfony 4 requires PHP version > 7.1.3 to run. 
 
-## 4-Installation 
+## 3-Installation 
 1. Clone this repository (Master branche)
 2. Put the downloaded repository into your server root folder. You can also use the Symfony server (excellent choice), in this case you don't have to put the dowloaded repository in your root server folder, but after complete installation you will have to run the `$ php bin/console server:run` command.
 3. Install the vendors : 
@@ -29,9 +29,12 @@ This project use Symfony 4 framework and Symfony 4 requires PHP version > 7.1.3 
   * You may also have to configure the config/packages/doctrine.yaml file for adjust your MySQL version.
   * Create the database `$ php bin/console doctrine:database:create`
   * Create all the tables 
-    * `$ php bin/console doctrine:migrations:diff`  
-    * `$ php bin/console doctrine:migrations:migrate`
+    * `$ bin/console doctrine:migrations:diff`  
+    * `$ bin/console doctrine:migrations:migrate`
 5. Optional :
   * Just after installation, you can fill the database with a set of data examples allready written in the Datafixtures folder. 
-  * Fill the database with the data set example `$ php bin/console doctrine:fixtures:load` press `y`.
-  * You can also use `$ php bin\console app:fixturesReload` command to achieve this. 
+  * Fill the database with the data set example `$ bin/console doctrine:fixtures:load` press `y`.
+  * You can also use `$ bin\console app:fixturesReload` command to achieve this. 
+  
+## 4-Tests coverage
+You can generate an html code coverage file by running `$ ./vendor/bin/simple-phpunit --coverage-html public/test-coverage `  
