@@ -3,10 +3,11 @@
 {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">{% endblock %}
 
 {% block body %}
+    <div class="row btn-div">
+        <a href="{{ path('task_create') }}" class="btn btn-success pull-right">Créer une tâche</a>
+    </div>
     <div class="row">
-        <div class="row">
-            <a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
-        </div>
+        <div class="text-center">
         {% if app.request.get('_route') == 'task_list' %}
             <h3 class="text-center">Liste des tâches à faire</h3>
             <div class="margin-bottom text-center">
@@ -18,6 +19,7 @@
                 <a href="{{ path('task_list') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
             </div>
         {% endif %}
+        </div>
         {% for task in tasks %}
         <div class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail">
