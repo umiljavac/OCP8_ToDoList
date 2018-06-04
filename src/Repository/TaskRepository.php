@@ -19,25 +19,25 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-   public function tasksToDo($user)
-   {
-       return $this->createQueryBuilder('t')
+    public function tasksToDo($user)
+    {
+        return $this->createQueryBuilder('t')
            ->andWhere('t.author = :user OR t.author is null')
            ->setParameter('user', $user)
            ->andWhere('t.isDone = false')
            ->getQuery()
            ->execute()
-       ;
-   }
+        ;
+    }
 
-   public function tasksDone($user)
-   {
-       return $this->createQueryBuilder('t')
+    public function tasksDone($user)
+    {
+        return $this->createQueryBuilder('t')
            ->andWhere('t.author = :user OR t.author is null')
            ->setParameter('user', $user)
            ->andWhere('t.isDone = true')
            ->getQuery()
            ->execute()
-       ;
-   }
+        ;
+    }
 }
