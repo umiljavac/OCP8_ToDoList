@@ -45,8 +45,8 @@ class DefaultControllerTest extends BaseFunctionalTest
             $crawler->selectLink("Consulter la liste des tâches terminées")->count()
         );
         $this->assertSame(
-            1,
-            $crawler->selectLink("Créer un utilisateur")->count()
+            2,
+            $crawler->selectLink("Créer")->count()
         );
         $this->assertSame(
             1, $crawler->selectLink("Se déconnecter")->count()
