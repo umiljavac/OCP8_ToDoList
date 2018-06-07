@@ -55,11 +55,11 @@ class UserManager
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->mailerService->sendMail(
                 $user,
                 MailerService::SUBJECT_REGISTER,
-                MailerService::TEMPLATE_CREATE);
+                MailerService::TEMPLATE_CREATE
+            );
 
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
@@ -92,11 +92,11 @@ class UserManager
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->mailerService->sendMail(
                 $user,
                 MailerService::SUBJECT_EDIT_USER,
-                MailerService::TEMPLATE_EDIT);
+                MailerService::TEMPLATE_EDIT
+            );
 
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);

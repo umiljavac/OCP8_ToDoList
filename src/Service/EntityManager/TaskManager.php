@@ -72,7 +72,7 @@ class TaskManager
             $flashMessage = new FlashMessage(
                 FlashMessage::TYPE_SUCCESS,
                 FlashMessage::MESSAGE_TASK_ADDED
-                );
+            );
             $managerResult['message'] = $flashMessage;
             $managerResult['task'] = $task;
             return $managerResult;
@@ -91,8 +91,7 @@ class TaskManager
         $form = $this->formManager->createTaskForm($task);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             return new FlashMessage(
                 FlashMessage::TYPE_SUCCESS,

@@ -77,7 +77,7 @@ class UserControllerTest extends BaseFunctionalTest
         $crawler = $this->loggedAdmin->request('GET', '/users/4/edit');
         $this->assertSame(
             1,
-            $crawler->filter('html:contains("Créer un utilisateur")')->count()
+            $crawler->filter('html:contains("Créer")')->count()
         );
 
         $form = $crawler->selectButton('Modifier')->form();

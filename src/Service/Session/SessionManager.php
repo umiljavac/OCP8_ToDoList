@@ -29,6 +29,6 @@ class SessionManager
 
     public function getEditRedirection()
     {
-       return $this->session->get('edit-redirection');
+        return $this->session->get('edit-redirection');
     }
 }
