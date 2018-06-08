@@ -37,4 +37,6 @@ This project use Symfony 4 framework and Symfony 4 requires PHP version > 7.1.3 
   * You can also use `$ bin\console app:fixturesReload` command to achieve this. 
   
 ## 4-Tests coverage
-You can generate an html code coverage file by running `$ ./vendor/bin/simple-phpunit --coverage-html public/test-coverage `  
+You can generate an html code coverage file by running `$ ./vendor/bin/simple-phpunit --coverage-html public/test-coverage `.
+
+Now your code coverage can be displayed on address : 'localhost:yourPort/test-coverage/index.html'
