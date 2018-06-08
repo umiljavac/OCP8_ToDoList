@@ -10,7 +10,7 @@ https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
 
 ## 1-Intro 
 The aim of this project is to improve an existing project.  
-We have to correct some anomalies and implements new functionality.
+We have to correct some anomalies and implement new functionalities.
   
 ## 2-Requirements
 This project use Symfony 4 framework and Symfony 4 requires PHP version > 7.1.3 to run. 
