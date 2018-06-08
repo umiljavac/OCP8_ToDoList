@@ -39,4 +39,4 @@ This project use Symfony 4 framework and Symfony 4 requires PHP version > 7.1.3 
 ## 4-Tests coverage
 You can generate an html code coverage file by running `$ ./vendor/bin/simple-phpunit --coverage-html public/test-coverage `.
 
-Now your code coverage can be displayed on address : 'localhost:yourPort/test-coverage/index.html'
+Now the code coverage can be displayed on address "localhost:yourPort/test-coverage/index.html"
