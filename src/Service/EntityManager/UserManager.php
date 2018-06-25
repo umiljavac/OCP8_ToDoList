@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ulrich
- * Date: 21/05/2018
- * Time: 10:04
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service\EntityManager;
@@ -22,24 +26,24 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserManager
 {
     private $em;
-    private $formManager;
-    private $passwordEncoder;
-    private $mailerService;
+    private $fm;
+    private $pe;
+    private $ms;
 
     /**
      * UserManager constructor.
      *
      * @param EntityManagerInterface       $em
-     * @param FormManager                  $formManager
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param MailerService                $mailerService
+     * @param FormManager                  $fm
+     * @param UserPasswordEncoderInterface $pe
+     * @param MailerService                $ms
      */
-    public function __construct(EntityManagerInterface $em, FormManager $formManager, UserPasswordEncoderInterface $passwordEncoder, MailerService $mailerService)
+    public function __construct(EntityManagerInterface $em, FormManager $fm, UserPasswordEncoderInterface $pe, MailerService $ms)
     {
         $this->em = $em;
-        $this->formManager = $formManager;
-        $this->passwordEncoder = $passwordEncoder;
-        $this->mailerService = $mailerService;
+        $this->fm = $fm;
+        $this->pe = $pe;
+        $this->ms = $ms;
     }
 
     /**
@@ -61,17 +65,17 @@ class UserManager
     public function createUser(Request $request)
     {
         $user = new User();
-        $form = $this->formManager->createUserRegistrationForm($user);
+        $form = $this->fm->createUserRegistrationForm($user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->mailerService->sendMail(
+            $this->ms->sendMail(
                 $user,
                 MailerService::SUBJECT_REGISTER,
                 MailerService::TEMPLATE_CREATE
             );
 
-            $encodedPassword = $this->passwordEncoder->encodePassword(
+            $encodedPassword = $this->pe->encodePassword(
                 $user,
                 $user->getPassword()
             );
@@ -104,17 +108,17 @@ class UserManager
      */
     public function editUser(Request $request, User $user)
     {
-        $form = $this->formManager->createUserRegistrationForm($user);
+        $form = $this->fm->createUserRegistrationForm($user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->mailerService->sendMail(
+            $this->ms->sendMail(
                 $user,
                 MailerService::SUBJECT_EDIT_USER,
                 MailerService::TEMPLATE_EDIT
             );
 
-            $encodedPassword = $this->passwordEncoder->encodePassword(
+            $encodedPassword = $this->pe->encodePassword(
                 $user,
                 $user->getPassword()
             );

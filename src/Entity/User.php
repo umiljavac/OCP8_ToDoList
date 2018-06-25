@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ulrich
- * Date: 23/03/2018
- * Time: 16:00
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Entity;
