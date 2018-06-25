@@ -1,4 +1,14 @@
 <?php
+/**
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\Controller;
 
@@ -11,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * Class UserController
+ */
 class UserController extends Controller
 {
     /**
@@ -22,7 +35,10 @@ class UserController extends Controller
      */
     public function listAction(UserManager $userManager)
     {
-        return $this->render('views/user/list.html.twig', ['users' => $userManager->listAllAction()]);
+        return $this->render(
+            'views/user/list.html.twig',
+            ['users' => $userManager->listAllAction()]
+        );
     }
 
     /**
@@ -41,9 +57,16 @@ class UserController extends Controller
         $managerResult = $userManager->createUser($request);
 
         if (is_array($managerResult)) {
-            return $this->redirectToListOfUsers($managerResult['message'], $managerResult['user']);
+            return $this->redirectToListOfUsers(
+                $managerResult['message'],
+                $managerResult['user']
+            );
         }
-        return $this->render('views/user/create.html.twig', ['form' => $managerResult]);
+
+        return $this->render(
+            'views/user/create.html.twig',
+            ['form' => $managerResult]
+        );
     }
 
     /**
@@ -65,7 +88,11 @@ class UserController extends Controller
         if ($managerResult instanceof FlashMessage) {
             return $this->redirectToListOfUsers($managerResult, $user);
         }
-        return $this->render('views/user/edit.html.twig', ['form' => $managerResult, 'user' => $user]);
+
+        return $this->render(
+            'views/user/edit.html.twig',
+            ['form' => $managerResult, 'user' => $user]
+        );
     }
 
     /**
@@ -76,7 +103,10 @@ class UserController extends Controller
      */
     public function redirectToListOfUsers(FlashMessage $flashMessage, User $user)
     {
-        $this->addFlash($flashMessage->getType(), sprintf($flashMessage->getMessage(), $user->getUsername()));
+        $this->addFlash(
+            $flashMessage->getType(),
+            sprintf($flashMessage->getMessage(), $user->getUsername())
+        );
 
         return $this->redirectToRoute('user_list');
     }

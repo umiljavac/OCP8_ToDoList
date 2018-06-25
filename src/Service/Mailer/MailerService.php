@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ulrich
- * Date: 25/05/2018
- * Time: 10:43
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service\Mailer;
@@ -11,6 +15,9 @@ namespace App\Service\Mailer;
 use App\Entity\User;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class MailerService
+ */
 class MailerService
 {
     private $mailer;
@@ -21,6 +28,12 @@ class MailerService
     const TEMPLATE_CREATE = 'emails/createUserInformations.html.twig';
     const TEMPLATE_EDIT = 'emails/editUserInformations.html.twig';
 
+    /**
+     * MailerService constructor.
+     *
+     * @param \Swift_Mailer      $mailer
+     * @param ContainerInterface $container
+     */
     public function __construct(\Swift_Mailer $mailer, ContainerInterface $container)
     {
         $this->mailer = $mailer;
@@ -28,9 +41,9 @@ class MailerService
     }
 
     /**
-     * @param User $user
-     * @param $subject
-     * @param $template
+     * @param User   $user
+     * @param string $subject
+     * @param string $template
      *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
@@ -45,7 +58,8 @@ class MailerService
                 $this->container->get('twig')->render(
                     $template,
                     array(
-                        'user' => $user)
+                        'user' => $user,
+                        )
                 ),
                 'text/html'
             );

@@ -1,26 +1,26 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ulrich
- * Date: 14/05/2018
- * Time: 14:44
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service\FlashMessage;
 
+/**
+ * Class FlashMessage
+ */
 class FlashMessage
 {
-    /**
-     * @var $type string
-     */
     private $type;
-
-    /**
-     * @var $message string
-     */
     private $message;
 
-    const TYPE_SUCCESS= 'success';
+    const TYPE_SUCCESS = 'success';
     const MESSAGE_TASK_ADDED = 'La tâche "%s" a bien été ajoutée.';
     const MESSAGE_TASK_REMOVED = 'La tâche "%s" a bien été supprimée.';
     const MESSAGE_TASK_EDITED = 'La tâche "%s" a bien été modifiée.';
@@ -32,8 +32,8 @@ class FlashMessage
     /**
      * FlashMessage constructor.
      *
-     * @param $type
-     * @param $message
+     * @param string $type
+     * @param string $message
      */
     public function __construct($type, $message)
     {

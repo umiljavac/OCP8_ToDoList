@@ -1,25 +1,43 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ulrich
- * Date: 24/05/2018
- * Time: 11:15
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Repository;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Class TaskRepository
+ */
 class TaskRepository extends ServiceEntityRepository
 {
+    /**
+     * TaskRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Task::class);
     }
 
-    public function tasksToDo($user)
+    /**
+     * @param User $user
+     *
+     * @return mixed
+     */
+    public function tasksToDo(User $user)
     {
         return $this->createQueryBuilder('t')
            ->andWhere('t.author = :user OR t.author is null')
@@ -30,7 +48,12 @@ class TaskRepository extends ServiceEntityRepository
         ;
     }
 
-    public function tasksDone($user)
+    /**
+     * @param User $user
+     *
+     * @return mixed
+     */
+    public function tasksDone(User $user)
     {
         return $this->createQueryBuilder('t')
            ->andWhere('t.author = :user OR t.author is null')

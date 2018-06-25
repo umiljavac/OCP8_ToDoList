@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ulrich
- * Date: 14/05/2018
- * Time: 13:26
+ * This file is a part of the ToDoList project of Openclassrooms PHP/Symfony
+ * development course.
+ *
+ * (c) Sarah Khalil
+ * (c) Ulrich Miljavac
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service\Form;
@@ -14,6 +18,9 @@ use App\Form\Type\TaskType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\FormFactoryInterface;
 
+/**
+ * Class FormManager
+ */
 class FormManager
 {
     private $formFactory;
@@ -49,7 +56,7 @@ class FormManager
     }
 
     /**
-     * @param $type
+     * @param mixed $type
      * @param null  $data
      * @param array $options
      *
