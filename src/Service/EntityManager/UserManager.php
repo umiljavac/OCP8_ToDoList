@@ -16,6 +16,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class UserManager
+ */
 class UserManager
 {
     private $em;
@@ -23,18 +26,25 @@ class UserManager
     private $passwordEncoder;
     private $mailerService;
 
-    public function __construct(
-        EntityManagerInterface $em,
-        FormManager $formManager,
-        UserPasswordEncoderInterface $passwordEncoder,
-        MailerService $mailerService
-    ) {
+    /**
+     * UserManager constructor.
+     *
+     * @param EntityManagerInterface       $em
+     * @param FormManager                  $formManager
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param MailerService                $mailerService
+     */
+    public function __construct(EntityManagerInterface $em, FormManager $formManager, UserPasswordEncoderInterface $passwordEncoder, MailerService $mailerService)
+    {
         $this->em = $em;
         $this->formManager = $formManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->mailerService = $mailerService;
     }
 
+    /**
+     * @return array
+     */
     public function listAllAction()
     {
         return $this->em->getRepository(User::class)->findAll();
@@ -61,7 +71,11 @@ class UserManager
                 MailerService::TEMPLATE_CREATE
             );
 
-            $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
+            $encodedPassword = $this->passwordEncoder->encodePassword(
+                $user,
+                $user->getPassword()
+            );
+
             $user->setPassword($encodedPassword);
             $this->em->persist($user);
             $this->em->flush();
@@ -72,8 +86,10 @@ class UserManager
             );
             $managerResult['message'] = $flashMessage;
             $managerResult['user'] = $user;
+
             return $managerResult;
         }
+
         return $form->createView();
     }
 
@@ -98,7 +114,11 @@ class UserManager
                 MailerService::TEMPLATE_EDIT
             );
 
-            $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
+            $encodedPassword = $this->passwordEncoder->encodePassword(
+                $user,
+                $user->getPassword()
+            );
+
             $user->setPassword($encodedPassword);
             $this->em->flush();
 
@@ -107,6 +127,7 @@ class UserManager
                 FlashMessage::MESSAGE_USER_EDITED
             );
         }
+
         return $form->createView();
     }
 }

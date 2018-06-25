@@ -14,6 +14,9 @@ use App\Form\Type\TaskType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\FormFactoryInterface;
 
+/**
+ * Class FormManager
+ */
 class FormManager
 {
     private $formFactory;
@@ -49,7 +52,7 @@ class FormManager
     }
 
     /**
-     * @param $type
+     * @param mixed $type
      * @param null  $data
      * @param array $options
      *

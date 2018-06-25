@@ -14,22 +14,38 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class AppFixtures
+ */
 class AppFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $passwordEncoder;
 
+    /**
+     * AppFixtures constructor.
+     *
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     */
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
 
         $user = new User();
         $user->setUsername('bob');
         $user->setEmail('bob@gmail.com');
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 'bob'));
+        $user->setPassword(
+            $this->passwordEncoder->encodePassword($user, 'bob')
+        );
         $user->setRoles('ROLE_USER');
 
         $manager->persist($user);
@@ -37,7 +53,9 @@ class AppFixtures extends Fixture
         $user1 = new User();
         $user1->setUsername('jo');
         $user1->setEmail('jo@gmail.com');
-        $user1->setPassword($this->passwordEncoder->encodePassword($user1, 'jo'));
+        $user1->setPassword(
+            $this->passwordEncoder->encodePassword($user1, 'jo')
+        );
         $user1->setRoles('ROLE_USER');
 
         $manager->persist($user1);
@@ -45,7 +63,9 @@ class AppFixtures extends Fixture
         $user2 = new User();
         $user2->setUsername('max');
         $user2->setEmail('max@gmail.com');
-        $user2->setPassword($this->passwordEncoder->encodePassword($user2, 'max'));
+        $user2->setPassword(
+            $this->passwordEncoder->encodePassword($user2, 'max')
+        );
         $user2->setRoles('ROLE_ADMIN');
 
         $manager->persist($user2);

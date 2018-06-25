@@ -16,17 +16,24 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\FlashMessage\FlashMessage;
 
+/**
+ * Class TaskManager
+ */
 class TaskManager
 {
     private $em;
     private $formManager;
     private $sessionManager;
 
-    public function __construct(
-        EntityManagerInterface $em,
-        FormManager $formManager,
-        SessionManager $sessionManager
-    ) {
+    /**
+     * TaskManager constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param FormManager            $formManager
+     * @param SessionManager         $sessionManager
+     */
+    public function __construct(EntityManagerInterface $em, FormManager $formManager, SessionManager $sessionManager)
+    {
         $this->em = $em;
         $this->formManager = $formManager;
         $this->sessionManager = $sessionManager;
@@ -75,8 +82,10 @@ class TaskManager
             );
             $managerResult['message'] = $flashMessage;
             $managerResult['task'] = $task;
+
             return $managerResult;
         }
+
         return $form->createView();
     }
 
@@ -93,6 +102,7 @@ class TaskManager
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
+
             return new FlashMessage(
                 FlashMessage::TYPE_SUCCESS,
                 FlashMessage::MESSAGE_TASK_EDITED
@@ -128,7 +138,10 @@ class TaskManager
     {
         $task->toggle(!$task->isDone());
         $this->em->flush();
-        $task->isDone() ? $msg = FlashMessage::MESSAGE_TASK_DONE : $msg = FlashMessage::MESSAGE_TASK_TODO;
+        $task->isDone() ? $msg = FlashMessage::MESSAGE_TASK_DONE :
+            $msg = FlashMessage::MESSAGE_TASK_TODO
+        ;
+
         return new FlashMessage(
             FlashMessage::TYPE_SUCCESS,
             $msg

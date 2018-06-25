@@ -14,6 +14,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class FixturesReloadCommand
+ *
+ * Used to reload the database and fill it with data fixtures
+ */
 class FixturesReloadCommand extends Command
 {
     /**
@@ -30,7 +35,10 @@ class FixturesReloadCommand extends Command
 
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('This command allows you to load dummy data by recreating database and loading fixtures...');
+            ->setHelp(
+                'This command allows you to load dummy data by 
+                recreating database and loading fixtures...'
+            );
     }
 
     /**
@@ -57,8 +65,13 @@ class FixturesReloadCommand extends Command
             ]
         );
 
-        $options = array('command' => 'doctrine:database:drop',"--force" => true);
-        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
+        $options = array(
+            'command' => 'doctrine:database:drop',
+            "--force" => true,
+        );
+        $application->run(
+            new \Symfony\Component\Console\Input\ArrayInput($options)
+        );
 
 
         $output->writeln(
@@ -70,8 +83,13 @@ class FixturesReloadCommand extends Command
             ]
         );
 
-        $options = array('command' => 'doctrine:database:create',"--if-not-exists" => true);
-        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
+        $options = array(
+            'command' => 'doctrine:database:create',
+            "--if-not-exists" => true,
+            );
+        $application->run(
+            new \Symfony\Component\Console\Input\ArrayInput($options)
+        );
 
         $output->writeln(
             [
@@ -83,8 +101,13 @@ class FixturesReloadCommand extends Command
         );
 
         //Create de Schema
-        $options = array('command' => 'doctrine:schema:update',"--force" => true);
-        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
+        $options = array(
+            'command' => 'doctrine:schema:update',
+            "--force" => true,
+        );
+        $application->run(
+            new \Symfony\Component\Console\Input\ArrayInput($options)
+        );
 
         $output->writeln(
             [
@@ -96,7 +119,12 @@ class FixturesReloadCommand extends Command
         );
 
         //Loading Fixtures
-        $options = array('command' => 'doctrine:fixtures:load',"--no-interaction" => true);
-        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
+        $options = array(
+            'command' => 'doctrine:fixtures:load',
+            "--no-interaction" => true,
+            );
+        $application->run(
+            new \Symfony\Component\Console\Input\ArrayInput($options)
+        );
     }
 }

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: ulrich
+ * Date: 23/06/2018
+ * Time: 14:48
+ */
 namespace App\Controller;
 
 use App\Entity\Task;
@@ -12,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class TaskController
+ */
 class TaskController extends Controller
 {
     /**
@@ -26,7 +34,7 @@ class TaskController extends Controller
         return $this->render(
             'views/task/list.html.twig',
             [
-                'tasks' => $taskManager->listUserTasksDone($this->getUser())
+                'tasks' => $taskManager->listUserTasksDone($this->getUser()),
             ]
         );
     }
@@ -43,7 +51,7 @@ class TaskController extends Controller
         return $this->render(
             'views/task/list.html.twig',
             [
-                'tasks' => $taskManager->listUserTasksToDo($this->getUser())
+                'tasks' => $taskManager->listUserTasksToDo($this->getUser()),
             ]
         );
     }
@@ -61,10 +69,16 @@ class TaskController extends Controller
         $managerResult = $taskManager->createTask($request, $this->getUser());
 
         if (is_array($managerResult)) {
-            return $this->redirectToListOfTasks($managerResult['message'], $managerResult['task']);
+            return $this->redirectToListOfTasks(
+                $managerResult['message'],
+                $managerResult['task']
+            );
         }
 
-        return $this->render('views/task/create.html.twig', ['form' => $managerResult]);
+        return $this->render(
+            'views/task/create.html.twig',
+            ['form' => $managerResult]
+        );
     }
 
     /**
@@ -82,7 +96,11 @@ class TaskController extends Controller
         $managerResult = $taskManager->editTask($request, $task);
 
         if ($managerResult instanceof FlashMessage) {
-            return $this->redirectAfterTaskEdit($managerResult, $task, $sessionManager);
+            return $this->redirectAfterTaskEdit(
+                $managerResult,
+                $task,
+                $sessionManager
+            );
         }
 
         return $this->render('views/task/edit.html.twig', [
@@ -100,7 +118,7 @@ class TaskController extends Controller
      *
      * @return RedirectResponse
      */
-    public function toggleTaskAction(Task $task, TaskManager $taskManager, Request $request)
+    public function toggleTaskAction(Task $task, Request $request, TaskManager $taskManager)
     {
         $managerResult = $taskManager->toggleTask($task);
 
@@ -116,7 +134,7 @@ class TaskController extends Controller
      *
      * @return RedirectResponse
      */
-    public function deleteTaskAction(Task $task, TaskManager $taskManager, Request $request)
+    public function deleteTaskAction(Task $task, Request $request, TaskManager $taskManager)
     {
         $managerResult = $taskManager->deleteTask($task);
 
@@ -131,7 +149,10 @@ class TaskController extends Controller
      */
     public function redirectToListOfTasks(FlashMessage $flashMessage, Task $task)
     {
-        $this->addFlash($flashMessage->getType(), sprintf($flashMessage->getMessage(), $task->getTitle()));
+        $this->addFlash(
+            $flashMessage->getType(),
+            sprintf($flashMessage->getMessage(), $task->getTitle())
+        );
 
         return $this->redirectToRoute('task_list');
     }
@@ -145,7 +166,10 @@ class TaskController extends Controller
      */
     public function redirectToReferer(FlashMessage $flashMessage, Task $task, Request $request)
     {
-        $this->addFlash($flashMessage->getType(), sprintf($flashMessage->getMessage(), $task->getTitle()));
+        $this->addFlash(
+            $flashMessage->getType(),
+            sprintf($flashMessage->getMessage(), $task->getTitle())
+        );
 
         return $this->redirect($request->headers->get('referer'));
     }
@@ -159,7 +183,10 @@ class TaskController extends Controller
      */
     public function redirectAfterTaskEdit(FlashMessage $flashMessage, Task $task, SessionManager $sessionManager)
     {
-        $this->addFlash($flashMessage->getType(), sprintf($flashMessage->getMessage(), $task->getTitle()));
+        $this->addFlash(
+            $flashMessage->getType(),
+            sprintf($flashMessage->getMessage(), $task->getTitle())
+        );
 
         return $this->redirect($sessionManager->getEditRedirection());
     }
