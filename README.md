@@ -31,7 +31,9 @@ This project use Symfony 4 framework and Symfony 4 requires PHP version > 7.1.3 
   * Create all the tables 
     * `$ bin/console doctrine:migrations:diff`  
     * `$ bin/console doctrine:migrations:migrate`
-5. Optional :
+5. Configure SwiftMailer
+  * The application uses SwiftMailer to send username and password when an Admin create a new user account or edit an existing one. To test this, configure the .env file (Swiftmailer section) and the config/packages/dev/swiftmailer.yaml file. 
+6. Optional :
   * Just after installation, you can fill the database with a set of data examples allready written in the Datafixtures folder. 
   * Fill the database with the data set example `$ bin/console doctrine:fixtures:load` press `y`.
   * You can also use `$ bin\console app:fixturesReload` command to achieve this. 
